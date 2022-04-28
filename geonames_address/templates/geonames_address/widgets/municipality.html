@@ -1,0 +1,18 @@
+{% load i18n %}
+<input type="text" geonames="country" {% if country %}value="{{ country.name }}"
+       data_loaded="{{ country.data_loaded }}"{% endif %}
+       {% include "geonames_address/widgets/attrs.html" with extra_id="_country" %}
+       placeholder="{% trans "Type country name first" %}"/>
+<input type="hidden" geonames="municipality"
+       {% if instance_id %}value="{{ instance_id }}"{% endif %}
+       {% if nic_type %}nic_type="{% trans nic_type %}"{% endif %}
+       {% if nic_mask %}nic_mask="{{ nic_mask }}"{% endif %}
+       {% include "geonames_address/widgets/attrs.html" %} />
+<input type="text" geonames="municipality_autocomplete" {% if GEONAMES_NO_FREE_TEXT_MUNICIPALITY %}required{% endif %}
+       {% if instance_name %}value="{{ instance_name }}"{% endif %}
+       {% if codice_catastale %}codice_catastale="{{ codice_catastale    }}" {% endif %}
+       {% if country %}country_id="{{ country.id }}" country_code="{{ country.code }}" {% endif %}
+       {% include "geonames_address/widgets/attrs.html" with extra_id="_autocomplete" %}
+       {% if hide_secondary_field %}style="display:none;" {% endif %}
+       placeholder="{% trans "Now type municipality name" %}"
+       codice_catastale="" selected_text="{{ instance_name }}" />

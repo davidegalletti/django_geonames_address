@@ -1,0 +1,8 @@
+{% load i18n %}
+<input type="text" geonames="nic" {% if widget.value %}value="{{ widget.value }}"{% endif %}
+       name="{{ widget.name }}" {% include "django/forms/widgets/attrs.html" %}
+       placeholder="{% trans "National Identification Code" %}"
+       default_placeholder="{% trans "National Identification Code" %}"
+        />
+<div class="has-error"></div>
+
