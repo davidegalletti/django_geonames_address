@@ -1,8 +1,4 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-__author__ = 'david'
-
-from django.utils.translation import gettext_lazy as _
 from django import forms
 
 

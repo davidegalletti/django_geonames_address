@@ -12,11 +12,11 @@ Django geonames is a Django app that allows you to have a local replica of some 
 Quick start
 -----------
 
-1. Add "geonames" to your INSTALLED_APPS setting like this::
+1. Add "geonames_address" to your INSTALLED_APPS setting like this::
 
     INSTALLED_APPS = [
         ...
-        'geonames',
+        'geonames_address',
     ]
 
 2. Run ``python manage.py migrate`` to create the models.

@@ -19,7 +19,7 @@ from stdnum.pt.nif import compact as pt_nif_compact
 
 from codicefiscale import build as build_codice_fiscale
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from geonames.models import GeonamesAdm3, Country
 
 
