@@ -1,4 +1,9 @@
 {% load i18n %}
+
+      if ($('div#external-credits>p#geonames').length===0) {
+        $('div#external-credits').append('<p id="geonames">Some data from <a href="https://www.geonames.org/">https://www.geonames.org/</a></p>')
+      }
+
       var no_free_text_country_codes = [];
       $('input[geonames=country]').autocomplete({
         source: "{{ FORCE_SCRIPT_NAME }}geonamesapi/countries/",
