@@ -1,0 +1,6 @@
+{% load i18n %}
+<input type="text" geonames="simple_municipality_autocomplete"
+       {% if instance_name %}value="{{ instance_name }}"{% endif %}
+       {% include "geonames_address/widgets/attrs.html" with extra_id="_autocomplete" %}
+       selected_text="{{ instance_name }}" />
+<input type="hidden" name="{{ name }}_id" id="{{ widget.attrs.id }}_id" value="{{ instance_id }}">

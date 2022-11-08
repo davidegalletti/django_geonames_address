@@ -117,6 +117,31 @@
         minLength: 3,
         delay: 300
       });
+      $('input[geonames=simple_municipality_autocomplete]').autocomplete({
+        source: function (request, response) {
+          $.ajax({
+            url: "{{ FORCE_SCRIPT_NAME }}geonamesapi/municipalities/",
+            dataType: "json",
+            data: {
+              term: request.term,
+              country_id: this.element.attr('country_id')
+            },
+            success: function (data) {
+              response(data);
+            }
+          });
+        },
+        select: function (event, ui) { //item selected
+          AutoCompleteSelectHandlerSimpleMunicipality(event, ui)
+        },
+        minLength: 3,
+        delay: 300
+      });
+      $('input[geonames=simple_municipality_autocomplete]').focusout(function (event) {
+        if ($(this).val() === "") {
+          $("#" + event.target.attributes["id"].value.slice(0, -13) + "_id").val("");
+        }
+      })
       $( "<div class=\"has-error\"></div>" ).insertAfter( "input[geonames=municipality_autocomplete]" );
       function AutoCompleteSelectHandlerMunicipality(event, ui) {
         // remove "_instance_id_autocomplete" and add "_content_type"
@@ -129,6 +154,12 @@
         if (ui.item.codice_catastale !== undefined) {
           event.target.attributes["codice_catastale"].value = ui.item.codice_catastale;
         }
+      }
+      function AutoCompleteSelectHandlerSimpleMunicipality(event, ui) {
+        // remove "_autocomplete" and add "_id"
+        // I store the actual instance id
+        $("#" + event.target.attributes["id"].value.slice(0, -13) + "_id").val(ui.item.id);
+        event.target.attributes["selected_text"].value = ui.item.label;
       }
       $('input[geonames=nic]').focusin(function (eventObject) {
         $('input[geonames=nic]').siblings(".has-error").html(''); // pulisco l'eventuale messaggio di errore

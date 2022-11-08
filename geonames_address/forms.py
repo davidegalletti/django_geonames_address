@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
-
+from .models import GeonamesAdm3
 
 class MunicipalityInput(forms.Widget):
     template_name = 'geonames_address/widgets/municipality.html'
@@ -28,6 +28,28 @@ class MunicipalityInput(forms.Widget):
                 context['nic_mask'] = value.country.nationalidentificationcodetype_set.all()[0].input_mask
         else:
             context['hide_secondary_field'] = True
+        return self._render(self.template_name, context, renderer)
+
+
+class SimpleMunicipalityInput(forms.Widget):
+    template_name = 'geonames_address/widgets/simple_municipality.html'
+
+    def __init__(self, attrs=None):
+        super(SimpleMunicipalityInput, self).__init__(attrs)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        """
+        Returns this Widget rendered as HTML, as a Unicode string.
+        """
+        context = self.get_context(name, value, attrs)
+        context['name'] = name
+        if value is not None:
+            value = GeonamesAdm3.objects.get(id=value)
+            context['country'] = (value.country if hasattr(value, 'country') else None)
+            context['instance_id'] = value.id
+            context['instance_name'] = value.name
+            if hasattr(value, 'country') and value.country.code == "IT" and value.adm2 is not None:
+                context['instance_name'] = ("%s ( %s )" % (value.name, value.adm2.code))
         return self._render(self.template_name, context, renderer)
 
 
