@@ -268,9 +268,9 @@
                       $('input[geonames=nic]').siblings(".has-error").html('');
                     } else {
                       //{% if GENERATE_CODICE_FISCALE %}
-                      $('input[geonames=nic]').siblings(".has-error").html('<span class="help-block"><strong>Il codice fiscale non sembra essere corretto. Per farlo calcolare al sistema cancellare il valore inserito e fare clic su un altro campo.</strong></span>');
+                      $('input[geonames=nic]').siblings(".has-error").html('<span class="help-block"><strong>Il codice fiscale non è coerente con gli altri valori inseriti. Per farlo calcolare al sistema cancellare il valore inserito e fare clic su un altro campo.</strong></span>');
                       //{% else %}
-                      $('input[geonames=nic]').siblings(".has-error").html('<span class="help-block"><strong>Il codice fiscale non sembra essere corretto. Il valore calcolato dal sistema è ' + data.cf + '</strong></span>');
+                      $('input[geonames=nic]').siblings(".has-error").html('<span class="help-block"><strong>Il codice fiscale non è coerente con gli altri valori inseriti. Il valore calcolato dal sistema è ' + data.cf + '</strong></span>');
                       //{% endif %}
                     }
                   }
