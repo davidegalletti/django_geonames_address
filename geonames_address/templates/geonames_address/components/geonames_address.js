@@ -47,6 +47,7 @@
         var nic_field = $("input[geonames=nic][municipality_field=" + event.target.attributes["id"].value.slice(3).slice(0, -8) + "]");
         var label_for_nic_field = $("label[for=" + nic_field.attr("id") + "]");
         if (ui.item.nic_type) {
+          //{% if NIC_ENFORCE_FORMAT_ON_BROWSER %}
           nic_field.attr("placeholder", ui.item.nic_input_mask);
           if (ui.item.nic_input_mask) {
             $.mask.definitions['b'] = '[A-Z]';
@@ -55,6 +56,7 @@
             nic_field.unmask();
           }
           label_for_nic_field.html(ui.item.nic_type);
+          //{% endif %}
         } else {
           // I must restore default values
           nic_field.attr("placeholder", nic_field.attr("default_placeholder"));
@@ -307,6 +309,8 @@
       nic_field = $("input[geonames=nic]");
       var nic_type = $("#id_" + nic_field.attr('municipality_field') ).attr('nic_type');
       var nic_mask = $("#id_" + nic_field.attr('municipality_field') ).attr('nic_mask');
+      //{% if not GEONAMES_FORCE_ITALIAN_NIC %}
+      //{% if NIC_ENFORCE_FORMAT_ON_BROWSER %}
       if (nic_type) {
         nic_field.attr("placeholder", nic_mask);
         var label_for_nic_field = $("label[for=" + nic_field.attr("id") + "]");
@@ -316,6 +320,8 @@
           nic_field.mask(nic_mask)
         }
       }
+      //{% endif %}
+      //{% endif %}
       var submitButton = nic_field.closest('form').find(':submit');
       submitButton.click(function() {
         var proceedWithSubmit = true;

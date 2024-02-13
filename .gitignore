@@ -1,3 +1,5 @@
 /.idea/
 /dist/
 /django_geonames_address.egg-info/
+/Pipfile
+/Pipfile.lock
