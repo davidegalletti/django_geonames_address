@@ -124,5 +124,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # La versione va scritta qui, su setup.cfg e su geonames_address/__init__.py
-VERSION = "0.6"
+VERSION = "0.7"
 VERSION_COMMENT = "fixes #1122 formato nic controllato dal browser"
