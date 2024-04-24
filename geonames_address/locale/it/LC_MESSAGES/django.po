@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-24 08:33+0000\n"
+"POT-Creation-Date: 2024-04-24 09:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: geonames_address/models.py:215
 #: geonames_address/templates/geonames_address/widgets/nic.html:4
 #: geonames_address/templates/geonames_address/widgets/nic.html:5
 msgid "National Identification Code"
 msgstr "Codice di identificazione nazionale"
+
+#: geonames_address/templates/geonames_address/components/geonames_address.html:17
+msgid "You should select a country name from the list."
+msgstr "Seleziona un paese dall'elenco."
+
+#: geonames_address/templates/geonames_address/components/geonames_address.html:86
+msgid ""
+"You should select a municipality from the list, if available. Click again on "
+"Save to confirm."
+msgstr "Seleziona una città dalla lista, se presente. Fai click nuovamente su Salva per confermare."
+
+#: geonames_address/templates/geonames_address/components/geonames_address.html:111
+#: geonames_address/templates/geonames_address/components/geonames_address.html:336
+msgid "You should select a municipality from the list."
+msgstr "Seleziona una città dall'elenco."
 
 #: geonames_address/templates/geonames_address/widgets/municipality.html:5
 msgid "Type country name first"
