@@ -9,12 +9,14 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import os
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+PROJECT_ROOT = os.environ._data[b'PWD'].decode('utf-8')
+PACKAGE_ROOT = '%s/rdp' % PROJECT_ROOT
+BASE_DIR = PROJECT_ROOT
+COMPONENT_BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -54,7 +56,7 @@ ROOT_URLCONF = 'django_geonames_address.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [os.path.join(PACKAGE_ROOT, "templates"),]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -77,7 +79,7 @@ WSGI_APPLICATION = 'django_geonames_address.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR + '/db.sqlite3',
     }
 }
 
@@ -105,6 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+LOCALE_PATHS = [BASE_DIR + '/geonames_address/locale', BASE_DIR + '/locale', ]
 
 TIME_ZONE = 'UTC'
 
