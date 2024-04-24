@@ -3,3 +3,5 @@
 /django_geonames_address.egg-info/
 /Pipfile
 /Pipfile.lock
+/locale/it/LC_MESSAGES/django.mo
+/locale/it/LC_MESSAGES/django.po
