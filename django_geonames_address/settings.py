@@ -127,5 +127,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # La versione va scritta qui, su setup.cfg e su geonames_address/__init__.py
-VERSION = "0.9"
-VERSION_COMMENT = "refs #1140 localizzazione"
+VERSION = "0.10"
+VERSION_COMMENT = "fixes #1261 residenza obbligatoria"
