@@ -28,7 +28,9 @@
         // remove "_country"
         // I clear the actual instance id
         $("#" + event.target.attributes["id"].value.slice(0, -8) + "_id").val("");
-
+        // remove "_instance_id_country" and add "_free_entry"
+        // I clear free entry
+        $("#" + event.target.attributes["id"].value.slice(0, -17) + "_free_entry").val("");
 
         var secondary_field = $("input#" + event.target.attributes["id"].value.slice(0, -8) + "_autocomplete[geonames=municipality_autocomplete]");
         secondary_field.show();
@@ -37,10 +39,9 @@
         secondary_field.attr("country_code", ui.item.code);
         secondary_field.attr("country_it_codice_catastale", ui.item.it_codice_catastale);
         if (ui.item.data_loaded) {
-          event.target.attributes["data_loaded"] = "True";
-          //secondary_field.attr("data_loaded", "True");
+          $(event.target).attr("data_loaded", "True")
         } else {
-          event.target.attributes["data_loaded"] = "False";
+          $(event.target).attr("data_loaded", "False")
         }
 
         //{% if not GEONAMES_FORCE_ITALIAN_NIC %}
@@ -110,6 +111,8 @@
               this.value = '';
               $(this).siblings(".has-error").html("<span class=\"help-block\"><strong>{% trans "You should select a municipality from the list." %}</strong></span>");
             }
+          } else {
+            $("#" + $(this).attr('id').slice(0, -22) + "_free_entry").val("");
           }
           //{% endif %}
         },

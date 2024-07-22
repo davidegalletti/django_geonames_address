@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from .models import GeonamesAdm3
+from geonames.models import GeonamesAdm3
+
 
 class MunicipalityInput(forms.Widget):
     template_name = 'geonames_address/widgets/municipality.html'
