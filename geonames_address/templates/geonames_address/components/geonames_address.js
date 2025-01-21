@@ -1,5 +1,52 @@
 {% load i18n %}
 
+      var AutoCompleteSelectHandlerCountry = function AutoCompleteSelectHandlerCountry( eventTarget, uiItem ) {
+        // remove "_instance_id_country" and add "_content_type"
+        // I clear content type
+        $("#" + eventTarget.attributes["id"].value.slice(0, -17) + "_content_type").val("");
+        // remove "_country"
+        // I clear the actual instance id
+        $("#" + eventTarget.attributes["id"].value.slice(0, -8) + "_id").val("");
+        // remove "_instance_id_country" and add "_free_entry"
+        // I clear free entry
+        $("#" + eventTarget.attributes["id"].value.slice(0, -17) + "_free_entry").val("");
+
+        var secondary_field = $("input#" + eventTarget.attributes["id"].value.slice(0, -8) + "_autocomplete[geonames=municipality_autocomplete]");
+        secondary_field.show();
+        secondary_field.val("");
+        secondary_field.attr("country_id", uiItem.id);
+        secondary_field.attr("country_code", uiItem.code);
+        secondary_field.attr("country_it_codice_catastale", uiItem.it_codice_catastale);
+        if (uiItem.data_loaded) {
+          $(eventTarget).attr("data_loaded", "True")
+        } else {
+          $(eventTarget).attr("data_loaded", "False")
+        }
+
+        //{% if not GEONAMES_FORCE_ITALIAN_NIC %}
+        var nic_field = $("input[geonames=nic][municipality_field=" + eventTarget.attributes["id"].value.slice(3).slice(0, -8) + "]");
+        var label_for_nic_field = $("label[for=" + nic_field.attr("id") + "]");
+        if (uiItem.nic_type) {
+          //{% if NIC_ENFORCE_FORMAT_ON_BROWSER %}
+          nic_field.attr("placeholder", uiItem.nic_input_mask);
+          if (uiItem.nic_input_mask) {
+            $.mask.definitions['b'] = '[A-Z]';
+            nic_field.mask(uiItem.nic_input_mask, {autoclear: false});
+          } else {
+            nic_field.unmask();
+          }
+          label_for_nic_field.html(uiItem.nic_type);
+          //{% endif %}
+        } else {
+          // I must restore default values
+          nic_field.attr("placeholder", nic_field.attr("default_placeholder"));
+          label_for_nic_field.html(nic_field.attr("default_label"));
+          nic_field.unmask("");
+        }
+        //{% endif %}
+      }
+
+    $(document).ready(function () {
       if ($('div#external-credits>p#geonames').length===0) {
         $('div#external-credits').append('<p id="geonames">Some data from <a href="https://www.geonames.org/">https://www.geonames.org/</a></p>')
       }
@@ -8,7 +55,7 @@
       $('input[geonames=country]').autocomplete({
         source: "{{ FORCE_SCRIPT_NAME }}geonamesapi/countries/",
         select: function (event, ui) { //item selected
-          AutoCompleteSelectHandlerCountry(event, ui)
+          AutoCompleteSelectHandlerCountry(event.target, ui.item)
         },
         change: function (event, ui) {
           //
@@ -21,51 +68,6 @@
         minLength: 3,
         sdelay: 300
       });
-      function AutoCompleteSelectHandlerCountry(event, ui) {
-        // remove "_instance_id_country" and add "_content_type"
-        // I clear content type
-        $("#" + event.target.attributes["id"].value.slice(0, -17) + "_content_type").val("");
-        // remove "_country"
-        // I clear the actual instance id
-        $("#" + event.target.attributes["id"].value.slice(0, -8) + "_id").val("");
-        // remove "_instance_id_country" and add "_free_entry"
-        // I clear free entry
-        $("#" + event.target.attributes["id"].value.slice(0, -17) + "_free_entry").val("");
-
-        var secondary_field = $("input#" + event.target.attributes["id"].value.slice(0, -8) + "_autocomplete[geonames=municipality_autocomplete]");
-        secondary_field.show();
-        secondary_field.val("");
-        secondary_field.attr("country_id", ui.item.id);
-        secondary_field.attr("country_code", ui.item.code);
-        secondary_field.attr("country_it_codice_catastale", ui.item.it_codice_catastale);
-        if (ui.item.data_loaded) {
-          $(event.target).attr("data_loaded", "True")
-        } else {
-          $(event.target).attr("data_loaded", "False")
-        }
-
-        //{% if not GEONAMES_FORCE_ITALIAN_NIC %}
-        var nic_field = $("input[geonames=nic][municipality_field=" + event.target.attributes["id"].value.slice(3).slice(0, -8) + "]");
-        var label_for_nic_field = $("label[for=" + nic_field.attr("id") + "]");
-        if (ui.item.nic_type) {
-          //{% if NIC_ENFORCE_FORMAT_ON_BROWSER %}
-          nic_field.attr("placeholder", ui.item.nic_input_mask);
-          if (ui.item.nic_input_mask) {
-            $.mask.definitions['b'] = '[A-Z]';
-            nic_field.mask(ui.item.nic_input_mask, {autoclear: false});
-          } else {
-            nic_field.unmask();
-          }
-          label_for_nic_field.html(ui.item.nic_type);
-          //{% endif %}
-        } else {
-          // I must restore default values
-          nic_field.attr("placeholder", nic_field.attr("default_placeholder"));
-          label_for_nic_field.html(nic_field.attr("default_label"));
-          nic_field.unmask("");
-        }
-        //{% endif %}
-      }
       function initialize_municipality(item) {
         if (item.attr('selected_text') != item.val()) {
           $("#" + item.attr('id').slice(0, -22) + "_content_type").val("");
@@ -76,10 +78,10 @@
           item.attr('selected_text').value = "";
         }
       }
-      $('input[geonames=municipality_autocomplete]').focusin(function (eventObject) {
+      $('input[geonames=municipality_autocomplete]').focusin(function (event) {
         initialize_municipality($(this));
       })
-      $('input[geonames=municipality_autocomplete]').focusout(function (eventObject) {
+      $('input[geonames=municipality_autocomplete]').focusout(function (event) {
         initialize_municipality($(this));
         // remove "_autocomplete" and add "_country"
         if (($("#" + event.target.attributes["id"].value.slice(0, -13) + "_country")[0].attributes['data_loaded'].value == "True") &&
@@ -345,3 +347,4 @@
         //{% endif %}
         return proceedWithSubmit;
       });
+    });
