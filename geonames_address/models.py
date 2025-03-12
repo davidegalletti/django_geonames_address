@@ -96,7 +96,7 @@ class NationalIdentificationCodeType(models.Model):
     def check_codicefiscale(cf_in, last_name, first_name, date_of_birth, gender, codice_catastale):
         cf = build_codice_fiscale(last_name, first_name, date_of_birth,
                    gender, codice_catastale)
-        return (cf == cf_in), cf
+        return (cf.upper() == cf_in.upper()), cf.upper()
 
     def check_nic(self, nic, last_name=None, first_name=None, date_of_birth=None, gender=None, it_codice_catastale=None):
         '''

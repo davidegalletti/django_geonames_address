@@ -127,5 +127,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # La versione va scritta qui, su setup.cfg e su geonames_address/__init__.py
-VERSION = "0.10.2"
-VERSION_COMMENT = "#1529 ricerca con cf da new_patient_identification"
+VERSION = "0.10.3"
+VERSION_COMMENT = "#1617 verifica codice fiscale non è case insensitive"
