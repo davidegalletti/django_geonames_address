@@ -98,10 +98,26 @@
             dataType: "json",
             data: {
               term: request.term,
-              country_id: this.element.attr('country_id')
+              country_id: this.element.attr('country_id'),
+              id: this.element.attr('id')
             },
             success: function (data) {
               response(data);
+              let id;
+              sURLVariables = $(this).attr('url').substring($(this).attr('url').lastIndexOf('?')+1).split('&');
+              for (i = 0; i < sURLVariables.length; i++) {
+                  sParameterName = sURLVariables[i].split('=');
+                  if (sParameterName[0] === 'id') {
+                      id = sParameterName[1];
+                  }
+              }
+              if (id) {
+                var thisElement = $('#' + id);
+                if (thisElement.attr('autoselect_first')=="1") {
+                  thisElement.data("ui-autocomplete").menu.element.children().first().click();
+                  thisElement.attr('autoselect_first', '0');
+                }
+              }
             }
           });
         },
@@ -131,10 +147,26 @@
             dataType: "json",
             data: {
               term: request.term,
-              country_id: this.element.attr('country_id')
+              country_id: this.element.attr('country_id'),
+              id: this.element.attr('id')
             },
             success: function (data) {
               response(data);
+              let id;
+              sURLVariables = $(this).attr('url').substring($(this).attr('url').lastIndexOf('?')+1).split('&');
+              for (i = 0; i < sURLVariables.length; i++) {
+                  sParameterName = sURLVariables[i].split('=');
+                  if (sParameterName[0] === 'id') {
+                      id = sParameterName[1];
+                  }
+              }
+              if (id) {
+                var thisElement = $('#' + id);
+                if (thisElement.attr('autoselect_first')=="1") {
+                  thisElement.data("ui-autocomplete").menu.element.children().first().click();
+                  thisElement.attr('autoselect_first', '0');
+                }
+              }
             }
           });
         },

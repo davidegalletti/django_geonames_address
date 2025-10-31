@@ -11,6 +11,8 @@
 <input type="text" geonames="municipality_autocomplete" {% if GEONAMES_NO_FREE_TEXT_MUNICIPALITY %}required{% endif %}
        {% if instance_name %}value="{{ instance_name }}"{% endif %}
        {% if codice_catastale %}codice_catastale="{{ codice_catastale    }}" {% endif %}
+       autoselect_first="0" {% comment %} used to search and select automatically the first item in the result list
+                            {% endcomment %}
        {% if country %}country_id="{{ country.id }}" country_code="{{ country.code }}" {% endif %}
        {% include "geonames_address/widgets/attrs.html" with extra_id="_autocomplete" %}
        {% if hide_secondary_field %}style="display:none;" {% endif %}
