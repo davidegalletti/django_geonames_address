@@ -83,6 +83,7 @@
                   $('#' + prefix + '_content_type').val('');
                   $('#' + prefix + '_id').val('');
                   $('#' + prefix + '_free_entry').val('---');
+                  $("#" + prefix.replace('_instance', '') + "_country_free_entry").val(data[0]['id']);
                 }
               }
             }
