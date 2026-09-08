@@ -50,7 +50,7 @@ class SimpleMunicipalityInput(forms.Widget):
             context['instance_id'] = value.id
             context['instance_name'] = value.name
             if hasattr(value, 'country') and value.country.code == "IT" and value.adm2 is not None:
-                context['instance_name'] = ("%s ( %s )" % (value.name, value.adm2.code))
+                context['instance_name'] =  str(value)
         return self._render(self.template_name, context, renderer)
 
 

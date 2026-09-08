@@ -48,12 +48,48 @@
 
     $(document).ready(function () {
       if ($('div#external-credits>p#geonames').length===0) {
-        $('div#external-credits').append('<p id="geonames">Some data from <a href="https://www.geonames.org/">https://www.geonames.org/</a></p>')
+        $('div#external-credits').append('<p id="geonames">Includes data from <a href="https://www.geonames.org/">https://www.geonames.org/</a></p>')
       }
 
       var no_free_text_country_codes = [];
       $('input[geonames=country]').autocomplete({
-        source: "{{ FORCE_SCRIPT_NAME }}geonamesapi/countries/",
+        source: function (request, response) {
+          $.ajax({
+            url: "{{ FORCE_SCRIPT_NAME }}geonamesapi/countries/",
+            dataType: "json",
+            data: {
+              term: request.term,
+              id: this.element.attr('id')
+            },
+            success: function (data) {
+              response(data);
+              let id;
+              sURLVariables = $(this).attr('url').substring($(this).attr('url').lastIndexOf('?')+1).split('&');
+              for (i = 0; i < sURLVariables.length; i++) {
+                  sParameterName = sURLVariables[i].split('=');
+                  if (sParameterName[0] === 'id') {
+                      id = sParameterName[1];
+                  }
+              }
+              if (id) {
+                var thisElement = $('#' + id);
+                if (thisElement.attr('autoselect_first')=="1") {
+                  thisElement.data("ui-autocomplete").menu.element.children().first().click();
+                  thisElement.attr('autoselect_first', '0');
+                  idAutocomplete = id.replace('_country', '_autocomplete');
+                  prefix = id.replace('_country', '');
+                  autocompleteElement = $('#' + idAutocomplete);
+                  $('#' + prefix + '_autocomplete').val('---');
+                  $('#' + prefix + '_content_type').val('');
+                  $('#' + prefix + '_id').val('');
+                  $('#' + prefix + '_free_entry').val('---');
+                  $("#" + prefix.replace('_instance', '') + "_country_free_entry").val(data[0]['id']);
+                }
+              }
+            }
+          });
+        },
+
         select: function (event, ui) { //item selected
           AutoCompleteSelectHandlerCountry(event.target, ui.item)
         },
