@@ -1,5 +1,2 @@
-from django.utils.version import get_version
-
-VERSION = (0, 10, 6, "final", 0)
-
-__version__ = get_version(VERSION)
+__version__ = "0.10.6"
+__version_comment__ = "dipendenze"
