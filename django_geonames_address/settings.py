@@ -126,6 +126,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# La versione va scritta qui, su setup.cfg e su geonames_address/__init__.py
-VERSION = "0.10.4"
-VERSION_COMMENT = "dipendenze"
+# La versione va scritta su geonames_address/__init__.py __version__ = "0.10.4"
+import geonames_address
+VERSION = (geonames_address.__version__ if hasattr(geonames_address, '__version__') else '')
+VERSION_COMMENT =  (geonames_address.__version_comment__ if hasattr(geonames_address, '__version_comment__') else '')
